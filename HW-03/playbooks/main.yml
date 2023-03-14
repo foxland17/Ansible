@@ -1,14 +1,18 @@
 ---
+
+# For run this playbook use this command line:
+# ansible-playbook -i ../inventory/inventory.ini main.yml
+
 - name: Install 'Docker'
   hosts: app 
   become: true
   tasks:
     - include_tasks: "{{ ansible_distribution }}.yml"
 
+
 - name: postgresql-server 
   hosts: database 
   become: true
- 
   tasks:
     - name: Install packages for Postgersql
       ansible.builtin.apt:
