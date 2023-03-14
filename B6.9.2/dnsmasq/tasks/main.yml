@@ -1,0 +1,40 @@
+---
+# tasks file for dnsmasq
+- name: Install FTP-vsftpd
+  package:
+    name: dnsmasq
+    state: latest
+  become: yes
+
+- name: Copy dnsmasq.conf
+  ansible.builtin.copy:
+    src:  dnsmasq.conf
+    dest: /etc/dnsmasq.conf
+    owner: root
+    group: root
+    mode: u=rw,g=r,o=r
+
+- name: Copy resolv.dnsmasq
+  ansible.builtin.copy:
+    src:  resolv.dnsmasq
+    dest: /etc/resolv.dnsmasq
+    owner: root
+    group: root
+    mode: u=rw,g=r,o=r
+
+- name: Copy resolv.conf
+  ansible.builtin.copy:
+    src:  resolv.conf
+    dest: /etc/resolv.conf
+    owner: root
+    group: root
+    mode: u=rw,g=r,o=r
+
+
+- name: Start vsftpd service
+  service:
+    name: dnsmasq
+    state: started
+    enabled: yes
+  become: yes
+

@@ -1,0 +1,22 @@
+--- 
+- name: Create superusers
+  hosts: inventory
+  tasks:
+    - name: Create superuser group
+      group:
+        name: superuser
+        state: present
+    - name: Create  user2
+      user:
+        name: user2
+        group: superuser
+    - name: Create  user3
+      user:
+        name: user3
+        group: superuser
+    - name: Give sudo access to devops user
+      blockinfile:
+        path: /etc/sudoers
+        insertafter: 'root    ALL=(ALL)       ALL'
+        block: |
+          %superuser        ALL=(ALL)       NOPASSWD: ALL
