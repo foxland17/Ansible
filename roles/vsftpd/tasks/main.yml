@@ -1,0 +1,16 @@
+---
+# tasks file for vsftpd
+- name: Install FTP-vsftpd
+  package:
+    name: vsftpd
+    state: latest
+  become: yes
+
+- name: Start vsftpd service
+  service:
+    name: vsftpd
+    state: started
+    enabled: yes
+  become: yes
+
+
