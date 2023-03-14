@@ -1,0 +1,22 @@
+---
+- name: Create user
+  hosts: server1
+  tasks:
+    - name: Add user user1 on server
+      ansible.builtin.user:
+        name: user1
+        shell: /bin/bash
+    - name: Create ssh dir on user1
+      ansible.builtin.file:
+        path: ~user1/.ssh
+        state: directory
+        owner: user1
+        group: user1
+        mode: 0700
+    - name: Upload SSH Key
+      ansible.builtin.copy:
+        src:  /root/ansible/vault/key
+        dest: ~user1/.ssh/id_rsa.pub
+        owner: user1
+        group: user1
+        mode: 0700
