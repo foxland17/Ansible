@@ -1,8 +1,4 @@
 ---
-
-#For run this playbuk user this command:
-# ansible-playbook -i ../inventory/inventory.ini main.yml
-
 - name: Install 'Docker'
   hosts: app 
   become: true
@@ -13,7 +9,8 @@
   hosts: database 
   become: true
  
-- name: Install packages for Postgersql
+  tasks:
+    - name: Install packages for Postgersql
       ansible.builtin.apt:
         name:
           - postgresql
