@@ -1,0 +1,41 @@
+---
+# tasks file for php
+- name: Install nginx+php
+  ansible.builtin.yum:
+    name: 
+      - php
+      - php-fpm 
+
+- name: Enable php-fpm systemd
+  ansible.builtin.systemd:
+    name: php-fpm 
+    enabled: true
+    masked: no
+
+- name: Create root Dir for nginx-php
+  ansible.builtin.file:
+     path:  /opt/nginx/php
+     state: directory
+     mode: '0755'
+
+- name: Copy index.php
+  ansible.builtin.copy:
+    src:  index.php
+    dest: /opt/nginx/php/index.php
+    owner: root
+    group: root
+    mode: u=rw,g=r,o=r
+
+- name: Copy PHP config www.conf
+  ansible.builtin.copy:
+    src:  www.conf
+    dest: /etc/php-fpm.d/www.conf
+    owner: root
+    group: root
+    mode: u=rw,g=r,o=r
+
+- name: Start php-fpm 
+  ansible.builtin.systemd:
+    name: php-fpm
+    state: started
+
